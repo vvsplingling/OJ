@@ -1,0 +1,29 @@
+### [面试题68 - I. 二叉搜索树的最近公共祖先](https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-zui-jin-gong-gong-zu-xian-lcof/)
+
+```c++
+/**
+
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ * int val;
+ * TreeNode *left;
+ * TreeNode *right;
+ * TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+   */
+   class Solution {
+   public:
+   TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+       int max=p->val>q->val?p->val:q->val;
+       int min=p->val>q->val?q->val:p->val;
+       if(root==NULL||(root->val>min&&root->val<max)||root->val==min||root->val==max)
+           return root;
+       if(root->val>max)
+           return lowestCommonAncestor(root->left,p,q);
+       if(root->val<min)
+           return lowestCommonAncestor(root->right,p,q);
+       return NULL;
+   }
+   };
+```
+

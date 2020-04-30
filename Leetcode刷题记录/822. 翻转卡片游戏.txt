@@ -1,0 +1,32 @@
+### [822. 翻转卡片游戏](https://leetcode-cn.com/problems/card-flipping-game/)
+
+```c++
+class Solution {
+public:
+    int flipgame(vector<int>& fronts, vector<int>& backs) {
+        set<int> same;
+        int len=fronts.size();
+        int i;
+        int minx=2000;
+        for(i=0;i<len;i++)
+        {
+            if(fronts[i]==backs[i])
+                same.insert(fronts[i]);
+        }
+        for(i=0;i<len;i++)
+        {
+            if(!same.count(fronts[i]))
+                minx=min(minx,fronts[i]);
+        }
+        for(i=0;i<len;i++)
+        {
+            if(!same.count(backs[i]))
+                minx=min(minx,backs[i]);
+        }
+        if(minx==2000)
+            return 0;
+        return minx;
+    }
+};
+```
+

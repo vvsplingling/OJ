@@ -1,0 +1,43 @@
+### [15. 三数之和](https://leetcode-cn.com/problems/3sum/)
+
+```c++
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        if(nums.empty()||nums.front()>0||nums.back()<0)
+            return {};
+        int len=nums.size();
+        int first,tmp;
+        vector<vector<int>> res;
+        for(first=0;first<len-2;first++)
+        {
+            if(nums[first]>0)
+                break;
+            if(first>0&&nums[first]==nums[first-1])
+                continue;
+            int mid=first+1,last=len-1;
+            while(mid<last)
+            {
+                tmp=nums[first]+nums[mid]+nums[last];
+                if(tmp==0)
+                {
+                    res.push_back({nums[first],nums[mid],nums[last]});
+                    while(mid<last&&nums[mid]==nums[mid+1])
+                        mid++;
+                    while(mid<last&&nums[last]==nums[last-1])
+                        last--;
+                    mid++;
+                    last--;
+                }
+                else if(tmp<0)
+                    mid++;
+                else
+                    last--;
+            }
+        }
+        return res;
+    }
+};
+```
+

@@ -1,0 +1,19 @@
+### [483. 最小好进制](https://leetcode-cn.com/problems/smallest-good-base/)
+
+```c++
+class Solution {
+public:
+    string smallestGoodBase(string n) {
+        long v = stoll(n); // 转化为整数
+        long res = v-1;
+        for(int m = 2; pow(2, m) < v; m++) {
+            long x = pow(v, 1.0 / m);
+            if(v - (v-1)/x == pow(x, m)) {
+                res = x;
+            }
+        }
+        return to_string(res);
+    }
+};
+```
+

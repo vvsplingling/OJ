@@ -1,0 +1,19 @@
+### [53. 最大子序和](https://leetcode-cn.com/problems/maximum-subarray/)
+
+思路：DP，若前一个数大于0，当前的数就加上前一个数，并用maxsum记录最大值
+
+```c++
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int maxsum=nums[0];
+        for(int i=1;i<nums.size();++i){
+            if(nums[i-1]>0)
+                nums[i]+=nums[i-1];
+            maxsum=max(maxsum,nums[i]);
+        }
+        return maxsum;
+    }
+};
+```
+

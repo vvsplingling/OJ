@@ -1,0 +1,47 @@
+### [682. 棒球比赛](https://leetcode-cn.com/problems/baseball-game/)
+
+```c++
+class Solution {
+public:
+    int calPoints(vector<string>& ops) {
+        stack<int> st;
+        int sum=0;
+        int len=ops.size();
+        int i;
+        for(i=0;i<len;i++)
+        {
+            if(ops[i]=="+")
+            {
+                int last=st.top();
+                st.pop();
+                int last2=st.top();
+                st.push(last);
+                st.push(last+last2);
+                sum+=st.top();
+            }
+
+            else if(ops[i]=="D")
+            {
+                st.push(2*st.top());
+                sum+=st.top();
+            }
+    
+            else if(ops[i]=="C")
+            {
+                sum-=st.top();
+                st.pop();
+            }
+            
+            else
+            {
+                st.push(stoi(ops[i].c_str()));
+                sum+=st.top();
+            }
+        }
+    
+        return sum;
+    }
+
+};
+```
+

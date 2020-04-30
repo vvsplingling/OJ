@@ -1,0 +1,118 @@
+### [547. 朋友圈](https://leetcode-cn.com/problems/friend-circles/)
+
+DFS
+
+```c++
+class Solution {
+public:
+    void dfs(vector<vector<int>>& M,int index,vector<int>& visited)
+    {
+        int i;
+        int length=M.size();
+        for(i=0;i<length;i++)
+        {
+            if(index!=i&&visited[i]==0&&M[index][i]==1)
+            {
+                visited[i]=1;
+                dfs(M,i,visited);
+            }
+        }
+    }
+
+    int findCircleNum(vector<vector<int>>& M) {
+        int length=M.size();
+        int i,cnt=0;
+        vector<int> visited(length,0);
+        for(i=0;i<length;++i)
+        {
+            if(visited[i]==0)
+            {
+                cnt++;
+                visited[i]=1;
+                dfs(M,i,visited);
+            }       
+        }
+        return cnt;
+    }
+};
+```
+
+
+
+BFS
+
+```c++
+class Solution {
+public:
+    int findCircleNum(vector<vector<int>>& M) {
+        int length=M.size();
+        int cnt=0,tmp,i,j;
+        vector<int> visited(length,0);
+        queue<int> q;
+        for(i=0;i<length;++i)
+        {
+            q.push(i);
+            if(visited[i]==0)
+                cnt++;
+            while(!q.empty())
+            {
+                tmp=q.front();
+                q.pop();
+                if(visited[tmp]==0)
+                {
+                    visited[tmp]=1;
+                    for(j=0;j<length;j++)
+                    {
+                        if(tmp!=j&&visited[j]==0&&M[tmp][j]==1)
+                        {
+                            q.push(j);
+                        }
+                    }
+                }
+            }
+        }
+        return cnt;
+    }
+};
+```
+
+
+
+并集法
+
+```c++
+class Solution {
+public:
+    int find(vector<int>& parent,int index)
+    {
+        if(parent[index]==-1)
+            return index;
+        return find(parent,parent[index]);
+    }
+
+    int findCircleNum(vector<vector<int>>& M) {
+        int length=M.size();
+        int cnt=0,i,j;
+        vector<int> parent(length,-1);
+        for(i=0;i<length;++i)
+        {
+            for(j=0;j<length;++j)
+            {
+                if(i!=j&&M[i][j]==1)
+                {
+                    int pi=find(parent,i);
+                    int pj=find(parent,j);
+                    if(pi!=pj)
+                        parent[pj]=pi;
+                }
+            }
+        }
+    
+        for(i=0;i<length;++i)
+            if(parent[i]==-1)
+                cnt++;
+    
+        return cnt;
+    }
+};
+```

@@ -1,0 +1,66 @@
+### [面试题52. 两个链表的第一个公共节点](https://leetcode-cn.com/problems/liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof/)
+
+两个stack
+
+```c++
+/**
+
+ * Definition for singly-linked list.
+ * struct ListNode {
+ * int val;
+ * ListNode *next;
+ * ListNode(int x) : val(x), next(NULL) {}
+ * };
+   */
+   class Solution {
+   public:
+   ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+       stack<ListNode*> st1;
+       stack<ListNode*> st2;
+       while(headA!=NULL){
+           st1.push(headA);
+           headA=headA->next;
+       }
+       while(headB!=NULL){
+           st2.push(headB);
+           headB=headB->next;
+       }
+       ListNode* res=NULL;
+       while(!st1.empty()&&!st2.empty()&&st1.top()==st2.top()){
+           res=st1.top();
+           st1.pop();
+           st2.pop();
+       }
+       return res;
+   }
+   };
+```
+
+
+
+双指针
+
+```c++
+/**
+
+ * Definition for singly-linked list.
+ * struct ListNode {
+ * int val;
+ * ListNode *next;
+ * ListNode(int x) : val(x), next(NULL) {}
+ * };
+   */
+   class Solution {
+   public:
+   ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+       ListNode* Node1=headA;
+       ListNode* Node2=headB;
+       while(Node1!=Node2){
+           Node1=Node1==NULL?headB:Node1->next;
+           Node2=Node2==NULL?headA:Node2->next;
+       }
+       return Node1;
+   }
+   };
+```
+

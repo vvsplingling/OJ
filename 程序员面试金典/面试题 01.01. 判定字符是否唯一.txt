@@ -1,0 +1,35 @@
+### [面试题 01.01. 判定字符是否唯一](https://leetcode-cn.com/problems/is-unique-lcci/)
+
+map	慢
+
+```c++
+class Solution {
+public:
+    bool isUnique(string astr) {
+        map<char,int> m;
+        for(int i=0;i<astr.size();++i){
+            m[astr[i]]++;
+            if(m[astr[i]]==2)
+                return false;
+        }
+        return true;
+    }
+};
+```
+
+vector	快
+
+```c++
+class Solution {
+public:
+    bool isUnique(string astr) {
+        vector<int> v(26);
+        for(int i=0;i<astr.size();++i){
+            v[astr[i]-'a']++;
+            if(v[astr[i]-'a']==2)
+                return false;
+        }
+        return true;
+    }
+};
+```

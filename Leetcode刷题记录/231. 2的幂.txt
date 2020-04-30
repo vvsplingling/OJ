@@ -1,0 +1,16 @@
+### [231. 2的幂](https://leetcode-cn.com/problems/power-of-two/)
+
+```c++
+class Solution {
+public:
+    bool isPowerOfTwo(int n) {
+        while(n%2==0&&n>=2)
+            n/=2;
+        if(n==1)
+            return true;
+        else
+            return false;
+    }
+};
+```
+

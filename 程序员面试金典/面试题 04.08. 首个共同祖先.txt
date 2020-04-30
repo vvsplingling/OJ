@@ -1,0 +1,26 @@
+### [面试题 04.08. 首个共同祖先](https://leetcode-cn.com/problems/first-common-ancestor-lcci/)
+
+![image-20200417233629679](%E6%96%B0%E5%BB%BA%E6%96%87%E6%9C%AC%E6%96%87%E6%A1%A3.assets/image-20200417233629679.png)
+
+```c++
+/**
+
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ * int val;
+ * TreeNode *left;
+ * TreeNode *right;
+ * TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+   */
+   class Solution {
+   public:
+   TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+       if (!root || root == p || root == q) return root;
+       TreeNode *left = lowestCommonAncestor(root->left, p, q);
+       TreeNode *right = lowestCommonAncestor(root->right, p, q);
+       return left ? right ? root : left : right;
+   }
+   };
+```
+

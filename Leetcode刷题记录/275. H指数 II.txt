@@ -1,0 +1,52 @@
+### [275. H指数 II](https://leetcode-cn.com/problems/h-index-ii/)
+
+遍历O(n)
+
+```c++
+class Solution {
+public:
+    int hIndex(vector<int>& citations) {
+        int n=citations.size();
+        int left=0,right=n-1,mid;
+        int i;
+        while(left<=right)
+        {
+            mid=(left+right)/2;
+            if(citations[mid]==n-mid)
+                return n-mid;
+            else if(citations[mid]<n-mid)
+                left=mid+1;
+            else
+                right=mid-1;
+        }
+        return n-left;
+    }
+};
+```
+
+
+
+二分查找O(logn)
+
+```c++
+class Solution {
+public:
+    int hIndex(vector<int>& citations) {
+        int n=citations.size();
+        int left=0,right=n-1,mid;
+        int i;
+        while(left<=right)
+        {
+            mid=(left+right)/2;
+            if(citations[mid]==n-mid)
+                return n-mid;
+            else if(citations[mid]<n-mid)
+                left=mid+1;
+            else
+                right=mid-1;
+        }
+        return n-left;
+    }
+};
+```
+

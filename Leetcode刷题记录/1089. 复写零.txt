@@ -1,0 +1,41 @@
+### [1089. 复写零](https://leetcode-cn.com/problems/duplicate-zeros/)
+
+```c++
+class Solution {
+public:
+    void duplicateZeros(vector<int>& arr) {
+        int index=0,i;
+        bool cover=false;
+        for(i=0;;++i){
+            if(arr[i]!=0)
+                index++;
+            else
+                index+=2;
+            if(index==arr.size())
+                break;
+            if(index>arr.size()){   //最后一个0不复写
+                cover=true;
+                break;
+            }
+                
+
+        }
+        int zero=arr.size()-i-1;
+        if(cover){
+            arr[arr.size()-1]=0;
+            --i;
+        }
+        for(;i>=0;--i){
+            if(arr[i]==0){
+                arr[i+zero]=0;
+                arr[i+zero-1]=0;
+                zero-=1;
+            }
+            else
+                arr[i+zero]=arr[i];
+        }
+    }
+
+};
+```
+

@@ -1,0 +1,49 @@
+### [855. 考场就座](https://leetcode-cn.com/problems/exam-room/)
+
+```c++
+class ExamRoom {
+private:
+    int n;
+    set<int> s;
+public:
+    ExamRoom(int N) {
+        n=N;
+    }
+
+    int seat() {
+        int dis=*s.begin(),pre=-1,pos=0;
+        if(s.size()>0)
+        {
+            for(auto i:s)
+            {
+                if(pre!=-1)
+                {
+                    int t=(i-pre)/2;
+                    if(t>dis){
+                        dis=t;
+                        pos=pre+t;
+                    }
+                }
+                pre=i;
+            }
+            if(n-1-*s.rbegin()>dis)
+                pos=n-1;
+        }
+        s.insert(pos);
+        return pos;
+    }
+    
+    void leave(int p) {
+        s.erase(p);
+    }
+
+};
+
+/**
+
+ * Your ExamRoom object will be instantiated and called as such:
+ * ExamRoom* obj = new ExamRoom(N);
+ * int param_1 = obj->seat();
+ * obj->leave(p);
+   */
+```

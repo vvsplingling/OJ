@@ -1,0 +1,60 @@
+### [面试题 03.03. 堆盘子](https://leetcode-cn.com/problems/stack-of-plates-lcci/)
+
+```c++
+class StackOfPlates {
+public:
+    vector<stack<int>> vectorstack;
+    int n;
+    StackOfPlates(int cap) {
+        n=cap;
+    }
+    
+
+    void push(int val) {
+        if(n>=1){
+            stack<int> s;
+            s.push(val);
+            if(vectorstack.empty())
+                vectorstack.push_back(s);
+            else
+                if(vectorstack.back().size()<n)
+                    vectorstack.back().push(val);
+                else
+                    vectorstack.push_back(s);
+        }
+    }
+    
+    int pop() {
+        if(vectorstack.empty())
+            return -1;
+        int tmp=vectorstack.back().top();
+        vectorstack.back().pop();
+        if(vectorstack.back().empty())
+            vectorstack.pop_back();
+        return tmp;
+    }
+    
+    int popAt(int index) {
+        if(vectorstack.empty()||index>=vectorstack.size())
+            return -1;
+        int tmp=vectorstack[index].top();
+        vectorstack[index].pop();
+        if(vectorstack[index].empty()){
+            auto it=vectorstack.begin()+index;
+            vectorstack.erase(it);
+        }
+        return tmp;
+    }
+
+};
+
+/**
+
+ * Your StackOfPlates object will be instantiated and called as such:
+ * StackOfPlates* obj = new StackOfPlates(cap);
+ * obj->push(val);
+ * int param_2 = obj->pop();
+ * int param_3 = obj->popAt(index);
+   */
+```
+

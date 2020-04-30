@@ -1,0 +1,71 @@
+### [437. 路径总和 III](https://leetcode-cn.com/problems/path-sum-iii/)
+
+dfs，双重递归
+
+```c++
+/**
+
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ * int val;
+ * TreeNode *left;
+ * TreeNode *right;
+ * TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+   */
+   class Solution {
+   public:
+   int cnt=0;
+   int pathSum(TreeNode* root, int sum) {
+       if(root==NULL)
+           return 0;
+       dfs(root,sum);
+       pathSum(root->left,sum);
+       pathSum(root->right,sum);
+       return cnt;
+   }
+   void dfs(TreeNode* root, int sum){
+       if(root==NULL)
+           return;
+       if(sum-root->val==0)
+           cnt++;
+       dfs(root->left,sum-root->val);
+       dfs(root->right,sum-root->val);
+   }
+   };
+```
+
+
+
+前缀法
+
+```c++
+/**
+
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ * int val;
+ * TreeNode *left;
+ * TreeNode *right;
+ * TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+   */
+   class Solution {
+   public:
+   unordered_map<int, int> count;
+   int pathSum(TreeNode* root, int sum) {
+       count[0] = 1;
+       return helper(root, sum, 0);
+   }
+   int helper(TreeNode* root, int sum, int prefix_sum) {
+       if (!root) return 0;
+       int res = 0;
+       prefix_sum += root->val;
+       res += count[prefix_sum - sum];
+       count[prefix_sum]++;
+       res += helper(root->left, sum, prefix_sum) + helper(root->right, sum, prefix_sum);
+       count[prefix_sum]--;
+       return res;
+   }
+   };
+```

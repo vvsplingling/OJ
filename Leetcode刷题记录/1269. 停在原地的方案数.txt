@@ -1,0 +1,31 @@
+### [1269. 停在原地的方案数](https://leetcode-cn.com/problems/number-of-ways-to-stay-in-the-same-place-after-some-steps/)
+
+```c++
+class Solution {
+private:
+    static const int mod=1000000007;
+public:
+    int numWays(int steps, int arrLen) {
+        arrLen=min(arrLen,steps+1);
+        vector<vector<int>> f(2,vector<int>(arrLen));
+        f[0][0]=1;
+        int i,j,k;
+        for(i=1;i<=steps;++i)
+        {
+            fill(f[i&1].begin(),f[i&1].end(),0);
+            for(j=0;j<arrLen;++j)
+            {
+                for(k=-1;k<=1;++k)
+                {
+                    if(j+k>=0&&j+k<arrLen)
+                    {
+                        f[i&1][j]=(f[i&1][j]+f[(i&1)^1][j+k])%mod;
+                    }
+                }
+            }
+        }
+        return f[steps&1][0];
+    }
+};
+```
+

@@ -1,0 +1,31 @@
+### [1324. 竖直打印单词](https://leetcode-cn.com/problems/print-words-vertically/)
+
+```c++
+class Solution {
+public:
+    vector<string> printVertically(string s) {
+        stringstream in(s);
+        string word;
+        vector<string> words;
+        int maxx=0;
+        while(in>>word)
+        {
+            words.push_back(word);
+            maxx=max(maxx,(int)word.size());
+        }
+        int i;
+        vector<string> res;
+        for(i=0;i<maxx;i++)
+        {
+            string concat;
+            for(string& w:words)
+                concat+=i<w.size()?w[i]:' ';
+            while(concat.back()==' ')
+                concat.pop_back();
+            res.push_back(move(concat));
+        }
+        return res;
+    }
+};
+```
+

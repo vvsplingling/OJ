@@ -1,0 +1,40 @@
+### [203. 移除链表元素](https://leetcode-cn.com/problems/remove-linked-list-elements/)
+
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeElements(ListNode* head, int val) {
+        ListNode* h=new ListNode(0);
+        h->next=head;
+        ListNode *prev=h,*curr=head,*toDelete=nullptr;
+        while(curr!=nullptr)
+        {
+            if(curr->val==val)
+            {
+                toDelete=curr;
+                prev->next=curr->next;
+            }
+            else 
+                prev=prev->next;
+            curr=curr->next;
+            if(toDelete!=nullptr)
+            {
+                delete toDelete;
+                toDelete=nullptr;
+            }
+        }
+        ListNode* res=h->next;
+        delete h;
+        return res;
+    }
+};
+```
+

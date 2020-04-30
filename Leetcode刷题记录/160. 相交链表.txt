@@ -1,0 +1,95 @@
+### [160. 相交链表](https://leetcode-cn.com/problems/intersection-of-two-linked-lists/)
+
+遍历
+
+```c++
+/**
+    
+     * Definition for singly-linked list.
+     * struct ListNode {
+     * int val;
+     * ListNode *next;
+     * ListNode(int x) : val(x), next(NULL) {}
+     * };
+       */
+       class Solution {
+       public:
+       ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+           ListNode* a=headA;
+           while(a)
+           {
+               ListNode* b=headB;
+               while(b)
+               {
+               if(a==b)
+                {
+                    return a;
+                }
+                b=b->next;
+            }
+            a=a->next;
+        }
+        return nullptr;
+    }
+    };
+```
+
+ 
+
+哈希
+
+```c++
+/**
+Definition for singly-linked list.
+
+* struct ListNode {
+* int val;
+* ListNode *next;
+* ListNode(int x) : val(x), next(NULL) {}
+* };
+  */
+  class Solution {
+  public:
+  ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+      set<ListNode*>sets;
+  ListNode *a,*b;
+   for(a=headA;a!=nullptr;a=a->next)
+       sets.insert(a);
+   for(b=headB;b!=nullptr;b=b->next)
+       if(sets.find(b)!=sets.end())
+           return b;
+   return nullptr;
+  }
+  };
+```
+
+
+
+双链表
+
+ ```c++
+/**
+
+ * Definition for singly-linked list.
+     * struct ListNode {
+     * int val;
+     * ListNode *next;
+     * ListNode(int x) : val(x), next(NULL) {}
+     * };
+       */
+       class Solution {
+       public:
+       ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+       ListNode *a=headA, *b=headB;
+        while(a!=b)
+        {
+            a=(a==nullptr)?headB:a->next;
+            b=(b==nullptr)?headA:b->next;
+        }
+        return a;
+    }
+    };
+ ```
+
+ 
+

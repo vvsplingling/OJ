@@ -1,0 +1,17 @@
+### [面试题15. 二进制中1的个数](https://leetcode-cn.com/problems/er-jin-zhi-zhong-1de-ge-shu-lcof/)
+
+思路：二进制数n与n-1相与就能把n最右边的1变成0
+
+```c++
+class Solution {
+public:
+    int hammingWeight(uint32_t n) {
+        int cnt=0;
+        while(n){
+            cnt++;
+            n&=(n-1);
+        }
+        return cnt;
+    }
+};
+```

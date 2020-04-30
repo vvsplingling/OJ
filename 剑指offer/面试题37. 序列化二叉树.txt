@@ -1,0 +1,92 @@
+### [面试题37. 序列化二叉树](https://leetcode-cn.com/problems/xu-lie-hua-er-cha-shu-lcof/)
+
+```c++
+/**
+
+ * Definition for a binary tree node.
+
+ * struct TreeNode {
+
+ * int val;
+
+ * TreeNode *left;
+
+ * TreeNode *right;
+
+ * TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+
+ * };
+   */
+   class Codec {
+   public:
+
+   // Encodes a tree to a single string.
+   string serialize(TreeNode* root) {
+       string res("[");
+       queue<TreeNode*> q;
+       q.push(root);
+       if(q.front()==NULL)
+           res.append("null");
+       else{
+           res.append(to_string(q.front()->val));
+           q.push(q.front()->left);
+           q.push(q.front()->right);
+       }
+       q.pop();
+       while(!q.empty()){
+           res.push_back(',');
+           if(q.front()==NULL)
+               res.append("null");
+           else{
+               res.append(to_string(q.front()->val));
+               q.push(q.front()->left);
+               q.push(q.front()->right);
+           }
+           q.pop();          
+       }
+       res.push_back(']');
+       return res;
+   }
+
+   // Decodes your encoded data to tree.
+   TreeNode* deserialize(string data) {
+       vector<TreeNode*> v;
+       int sum=0;
+       bool neg=false;
+       for(int i=1;i<data.size();++i){
+           if(data[i]=='n')
+               v.push_back(NULL);
+           if(data[i]=='-')
+               neg=true;
+           if(!(data[i]>='0'&&data[i]<='9'))
+               continue;
+           while(data[i]>='0'&&data[i]<='9')
+               sum=10*sum+data[i++]-'0';
+           if(neg){
+               sum-=2*sum;
+               neg=false;
+           }
+           v.push_back(new TreeNode(sum));
+           sum=0;
+       }
+       queue<TreeNode*> q;
+       int i=0;
+       q.push(v[i++]);
+       while(!q.empty()) {
+           if(q.front()!=NULL){
+               q.front()->left = v[i];
+               q.push(v[i++]);
+               q.front()->right = v[i];
+               q.push(v[i++]);
+           }
+           q.pop();
+       }
+       return v[0];
+   }
+   };
+
+// Your Codec object will be instantiated and called as such:
+// Codec codec;
+// codec.deserialize(codec.serialize(root));
+```
+

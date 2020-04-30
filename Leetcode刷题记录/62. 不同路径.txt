@@ -1,0 +1,41 @@
+### [62. 不同路径](https://leetcode-cn.com/problems/unique-paths/)
+
+组合数
+
+```c++
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        int big=m>n?m:n;
+        int small=m>n?n:m;
+        long long res=1;
+        for(int i=big;i<=m+n-2;++i)
+            res*=i;
+        for(int i=2;i<=small-1;++i)
+            res/=i;
+        return res;
+    }
+};
+```
+
+
+
+dp
+
+```c++
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        vector<vector<int>> dp(n,vector<int>(m));
+        for(int i=0;i<m;++i)
+            dp[0][i]=1;
+        for(int i=0;i<n;++i)
+            dp[i][0]=1;
+        for(int i=1;i<n;++i)
+            for(int j=1;j<m;++j)
+                dp[i][j]=dp[i-1][j]+dp[i][j-1];
+        return dp[n-1][m-1];
+    }
+};
+```
+

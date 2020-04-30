@@ -1,0 +1,27 @@
+### [面试题48. 最长不含重复字符的子字符串](https://leetcode-cn.com/problems/zui-chang-bu-han-zhong-fu-zi-fu-de-zi-zi-fu-chuan-lcof/)
+
+```c++
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        vector<int> alphabet(128,-1);
+        int maxlength=0;
+        int curlength=0;
+        for(int i=0;i<s.size();++i){
+            if(alphabet[s[i]]==-1)
+                curlength++;
+            else{
+                if(i-alphabet[s[i]]<=curlength)
+                    curlength=i-alphabet[s[i]];
+                else
+                    curlength++;
+            }
+            if(curlength>maxlength)
+                maxlength=curlength;
+            alphabet[s[i]]=i;
+        }
+        return maxlength;
+    }
+};
+```
+

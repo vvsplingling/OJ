@@ -1,0 +1,105 @@
+### [391. 完美矩形](https://leetcode-cn.com/problems/perfect-rectangle/)
+
+自己写的，但TLE了
+
+思路：将矩阵的左下角移到（0,0），利用二维数据来记录小方格被占得次数，大于2则直接返回false，要是有小方格没被填，也返回false。
+
+```c++
+class Solution {
+public:
+    bool isRectangleCover(vector<vector<int>>& rectangles) {
+        int minRow=INT_MAX;
+        int maxRow=INT_MIN;
+        int minCol=INT_MAX;
+        int maxCol=INT_MIN;
+        for(int i=0;i<rectangles.size();++i){
+            if(rectangles[i][0]<minRow)
+                minRow=rectangles[i][0];
+            if(rectangles[i][1]<minCol)
+                minCol=rectangles[i][1];
+            if(rectangles[i][2]>maxRow)
+                maxRow=rectangles[i][2];
+            if(rectangles[i][3]>maxCol)
+                maxCol=rectangles[i][3];
+        }
+        for(int i=0;i<rectangles.size();++i){
+            rectangles[i][0]-=minRow;
+            rectangles[i][1]-=minCol;
+            rectangles[i][2]-=minRow;
+            rectangles[i][3]-=minCol;
+        }
+        vector<vector<int>> v(maxRow-minRow,vector<int>(maxCol-minCol));
+        for(int i=0;i<rectangles.size();++i){
+            for(int j=rectangles[i][0];j<rectangles[i][2];++j){
+                for(int k=rectangles[i][1];k<rectangles[i][3];++k){
+                    v[j][k]+=1;
+                    if(v[j][k]==2)
+                        return false;
+                }
+            }
+        }
+        for(int i=0;i<v.size();++i){
+            for(int j=0;j<v[0].size();++j){
+                if(v[i][j]==0)
+                    return false;
+            }
+        }
+        return true;
+    }
+};
+```
+
+
+
+思路：一个小矩形四个顶点，大矩形顶角顶点只出现奇数次（且只有4个），其余顶点都出现偶数次，这样来保证矩形平铺，且保证小矩形面积相加等于大矩形面积。class Solution {
+
+```c++
+public:
+    bool isRectangleCover(vector<vector<int>>& rectangles) {
+        set<pair<int,int>> points;
+        int sum=0;
+        int minrow=INT_MAX;
+        int mincol=INT_MAX;
+        int maxrow=INT_MIN;
+        int maxcol=INT_MIN;
+        for(int i=0;i<rectangles.size();++i){
+            sum+=(rectangles[i][2]-rectangles[i][0])*(rectangles[i][3]-rectangles[i][1]);
+            minrow=min(minrow,rectangles[i][0]);
+            mincol=min(mincol,rectangles[i][1]);
+            maxrow=max(maxrow,rectangles[i][2]);
+            maxcol=max(maxcol,rectangles[i][3]);
+            pair<int,int> leftdown=make_pair(rectangles[i][0],rectangles[i][1]);
+            pair<int,int> leftup=make_pair(rectangles[i][0],rectangles[i][3]);
+            pair<int,int> rightdown=make_pair(rectangles[i][2],rectangles[i][1]);
+            pair<int,int> rightup=make_pair(rectangles[i][2],rectangles[i][3]);
+            if(!points.count(leftdown))
+                points.insert(leftdown);
+            else
+                points.erase(leftdown);
+            if(!points.count(leftup))
+                points.insert(leftup);
+            else
+                points.erase(leftup);
+            if(!points.count(rightdown))
+                points.insert(rightdown);
+            else
+                points.erase(rightdown);
+            if(!points.count(rightup))
+                points.insert(rightup);
+            else
+                points.erase(rightup);
+        }
+        if(sum!=(maxrow-minrow)*(maxcol-mincol))
+            return false;
+        if(points.size()!=4)
+            return false;
+        if(points.count(make_pair(minrow,mincol))!=1||
+           points.count(make_pair(minrow,maxcol))!=1||
+           points.count(make_pair(maxrow,mincol))!=1||
+           points.count(make_pair(maxrow,maxcol))!=1)
+            return false;
+        return true;
+    }
+};
+```
+

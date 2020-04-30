@@ -1,0 +1,52 @@
+### [1382. 将二叉搜索树变平衡](https://leetcode-cn.com/problems/balance-a-binary-search-tree/)
+
+中序遍历二叉搜索树存入vector中，根据vector bulid tree
+
+```c++
+/**
+
+ * Definition for a binary tree node.
+
+ * struct TreeNode {
+
+ * int val;
+
+ * TreeNode *left;
+
+ * TreeNode *right;
+
+ * TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+
+ * };
+   */
+   class Solution {
+   public:
+   TreeNode* balanceBST(TreeNode* root) {
+       vector<int> v;
+       if(root==NULL)  return NULL;
+       middleTraverse(root,v);
+       int left=0,right=v.size()-1;
+       TreeNode* res=buildTree(v,left,right); 
+       return res;
+   }
+
+   void middleTraverse(TreeNode* root,vector<int> &v){
+       if(root){
+           middleTraverse(root->left,v);
+           v.push_back(root->val);
+           middleTraverse(root->right,v);
+       }
+   }
+
+   TreeNode* buildTree(vector<int> &v,int left,int right){
+       if(left<=right){
+           int mid=(left+right)/2;
+           TreeNode* root=new TreeNode(v[mid]);
+           root->left=buildTree(v,left,mid-1);
+           root->right=buildTree(v,mid+1,right);
+           return root;
+       }
+       return NULL;
+   }
+   };
+```

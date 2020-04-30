@@ -1,0 +1,49 @@
+### [面试题11. 旋转数组的最小数字](https://leetcode-cn.com/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof/)
+
+顺序查找
+
+时间复杂度：O（n）
+
+空间复杂度：O（1）
+
+```c++
+class Solution {
+public:
+    int minArray(vector<int>& numbers) {
+        int min=numbers[0];
+        for(int i=1;i<numbers.size();++i){
+            if(numbers[i]<min)
+                min=numbers[i];
+        }
+        return min;
+    }
+};
+```
+
+
+
+分治法
+
+```c++
+class Solution {
+public:
+    int minArray(vector<int>& numbers) {
+        int left=0,right=numbers.size()-1;
+        return DivideSearch(numbers,left,right);
+    }
+
+    int DivideSearch(vector<int>& numbers,int left,int right){
+        if(left==right)
+            return numbers[left];
+        int mid=left+(right-left)/2;
+        if(numbers[mid]>numbers[right])
+            return DivideSearch(numbers,mid+1,right);
+        else if(numbers[mid]==numbers[right])
+            return DivideSearch(numbers,left,right-1);
+        else
+            return DivideSearch(numbers,left,mid);
+    }
+
+};
+```
+

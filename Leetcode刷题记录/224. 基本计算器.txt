@@ -1,0 +1,57 @@
+### [224. 基本计算器](https://leetcode-cn.com/problems/basic-calculator/)
+
+逆序匹配
+
+```c++
+class Solution {
+public:
+    int calculate(string s) {
+        stack<int> I;
+        stack<char> C;
+        int num=0,bit=0;
+        for(int i=s.size()-1;i>=0;--i){
+            if(s[i]>='0'&&s[i]<='9'){
+                num+=pow(10,bit)*(s[i]-'0');
+                bit++;
+            }
+            else if(s[i]!=' '){
+                if(bit!=0){
+                    I.push(num);
+                    num=0;
+                    bit=0;
+                }
+                if(s[i]=='(')
+                    calculateExpression(I,C);
+                else
+                    C.push(s[i]);
+            }
+        }
+        if(bit!=0)
+            I.push(num);
+        if(I.size()>1)
+            calculateExpression(I,C);
+        return I.top();
+    }
+
+    void calculateExpression(stack<int> &I,stack<char> &C){
+        int res=I.top();
+        I.pop();
+        while(!C.empty()&&C.top()!=')'){
+            if(C.top()=='+'){
+                C.pop();
+                res+=I.top();
+                I.pop();
+            }
+            else if(C.top()=='-'){
+                C.pop();
+                res-=I.top();
+                I.pop();
+            }
+        }
+        if(!C.empty())
+            C.pop();
+        I.push(res);
+    }
+};
+```
+

@@ -1,0 +1,25 @@
+### [面试题43. 1～n整数中1出现的次数](https://leetcode-cn.com/problems/1nzheng-shu-zhong-1chu-xian-de-ci-shu-lcof/)
+
+```c++
+class Solution {
+public:
+    int countDigitOne(int n) {
+        long i=1;
+        int cnt=0;
+        while(n/i!=0){
+            int high=n/(i*10);
+            int cur=(n%(i*10))/i;
+            int low=n-(n/i)*i;
+            if(cur==0)
+                cnt+=high*i;
+            else if(cur==1)
+                cnt+=high*i+low+1;
+            else
+                cnt+=high*i+i;
+            i*=10;
+        }
+        return cnt;
+    }
+};
+```
+

@@ -1,0 +1,32 @@
+### [258. 各位相加](https://leetcode-cn.com/problems/add-digits/)
+
+暴力法：
+
+```c++
+class Solution {
+public:
+    int addDigits(int num) {
+        while(num/10!=0){
+            int sum=num%10;
+            while(num/10!=0){
+                num/=10;
+                sum+=num%10;
+            }
+            num=sum;
+        }
+        return num;
+    }
+};
+```
+
+耍赖法：
+
+```c++
+class Solution {
+public:
+    int addDigits(int num) {
+        return (num-1)%9+1;
+    }
+};
+```
+

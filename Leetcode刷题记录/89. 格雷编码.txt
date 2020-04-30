@@ -1,0 +1,24 @@
+### [89. 格雷编码](https://leetcode-cn.com/problems/gray-code/)
+
+```c++
+class Solution {
+public:
+    vector<int> grayCode(int n) {
+        vector<int> res;
+        int factor=1;
+        while(n>=0)
+        {
+            if(res.size()==0)
+                res.push_back(0);
+            else{
+                for(int i=res.size()-1;i>=0;--i){
+                    res.push_back(res[i]+factor);
+                }
+                factor*=2;
+            }
+            n--;
+        }
+        return res;
+    }
+};
+```

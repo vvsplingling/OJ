@@ -1,0 +1,55 @@
+### [378. 有序矩阵中第K小的元素](https://leetcode-cn.com/problems/kth-smallest-element-in-a-sorted-matrix/)
+
+暴力排序
+
+```c++
+class Solution {
+public:
+    int kthSmallest(vector<vector<int>>& matrix, int k) {
+        vector<int> res;
+        int n=matrix.size();
+        for(int i=0;i<n;++i)
+            for(int j=0;j<n;++j)
+                res.push_back(matrix[i][j]);
+        sort(res.begin(),res.end());
+        return res[k-1];
+    }
+};
+```
+
+
+
+二分查找
+
+```c++
+class Solution {
+public:
+    int findsmall(vector<vector<int>>& matrix, int mid, int n){
+        int i=n-1,j=0,count=0;
+        while(j<n&&i>=0){
+            if(matrix[i][j]<=mid){
+                count+=i+1;
+                j++;
+            }
+            else
+                i--;
+        }
+        return count;
+    }
+
+    int kthSmallest(vector<vector<int>>& matrix, int k) {
+        int n=matrix.size();
+        int left=matrix[0][0],right=matrix[n-1][n-1];
+        while(left<right){
+            int mid=(left+right)/2;
+            int cnt=findsmall(matrix,mid,n);
+            if(cnt<k){
+                left=mid+1;
+            }else{
+                right=mid;
+            }
+        }
+        return right;
+    }
+};
+```

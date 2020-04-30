@@ -1,0 +1,56 @@
+### [面试题16. 数值的整数次方](https://leetcode-cn.com/problems/shu-zhi-de-zheng-shu-ci-fang-lcof/)
+
+自己写的，TLE
+
+```c++
+class Solution {
+public:
+    double myPow(double x, int n) {
+        if(n==0)
+            return 1;
+        bool neg=false;
+        if(n<0){
+            neg=true;
+            n-=2*n;
+        }
+        double res=1;
+        for(int i=1;i<=n;++i)
+            res*=x;
+        if(neg)
+            res=1/res;
+        return res;
+    }
+};
+```
+
+
+
+分治法
+
+```c++
+class Solution {
+public:
+    double myPow(double x, int n) {
+        bool neg=false;
+        long m=n;
+        if(m==0)
+            return 1;
+        if(m==-1)
+            return 1/x;
+        if(m<0){
+            m=-m;
+            neg=true;
+        } 
+        if(m==1)
+            return x;
+        double res=myPow(x,m/2);
+        res*=res;
+        if(m%2==1)
+            res*=x;
+        if(neg)
+            res=1/res;
+        return res;
+    }
+};
+```
+

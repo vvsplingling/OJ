@@ -1,0 +1,24 @@
+### [面试题49. 丑数](https://leetcode-cn.com/problems/chou-shu-lcof/)
+
+```c++
+class Solution {
+public:
+    int nthUglyNumber(int n) {
+        int p2=0,p3=0,p5=0;
+        vector<int> dp;
+        dp.push_back(1);
+        for(int i=1;i<n;++i){
+            int minNum=min(min(dp[p2]*2,dp[p3]*3),dp[p5]*5);
+            dp.push_back(minNum);
+            if(minNum==dp[p2]*2)
+                p2++;
+            if(minNum==dp[p3]*3)
+                p3++;
+            if(minNum==dp[p5]*5)
+                p5++;
+        }
+        return dp[n-1];
+    }
+};
+```
+

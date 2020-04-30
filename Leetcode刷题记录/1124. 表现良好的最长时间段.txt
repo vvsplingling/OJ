@@ -1,0 +1,34 @@
+### [1124. 表现良好的最长时间段](https://leetcode-cn.com/problems/longest-well-performing-interval/)
+
+```c++
+class Solution {
+public:
+    int longestWPI(vector<int>& hours) {
+        vector<int> presum;
+        int sum=0;
+        presum.push_back(sum);
+        for(int i=0;i<hours.size();++i){
+            sum+=hours[i]>8?1:-1;
+            presum.push_back(sum);
+        }
+        stack<int> s;
+        int min=presum[0];
+        s.push(min);
+        for(int i=1;i<presum.size();++i){
+            if(presum[i]<min){
+                min=presum[i];
+                s.push(i);
+            }
+        }
+        int maxlength=0;
+        for(int i=presum.size()-1;i>=0;--i){
+            while(!s.empty()&&presum[i]>presum[s.top()]){
+                maxlength=max(maxlength,i-s.top());
+                s.pop();
+            }
+        }
+        return maxlength;
+    }
+};
+```
+

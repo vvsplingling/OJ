@@ -1,0 +1,41 @@
+### [1038. 从二叉搜索树到更大和树](https://leetcode-cn.com/problems/binary-search-tree-to-greater-sum-tree/)
+
+先遍历右子树，再访问根节点，最后遍历左子树
+
+```c++
+/**
+
+ * Definition for a binary tree node.
+
+ * struct TreeNode {
+
+ * int val;
+
+ * TreeNode *left;
+
+ * TreeNode *right;
+
+ * TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+
+ * };
+   */
+   class Solution {
+   public:
+   TreeNode* bstToGst(TreeNode* root) {
+       if(root==NULL)
+           return NULL;
+       int sum=0;
+       Traverse(root,sum);
+       return root;
+   }
+
+   void Traverse(TreeNode* root,int &sum){
+       if(root){
+           Traverse(root->right,sum);
+           sum+=root->val;
+           root->val=sum;
+           Traverse(root->left,sum);
+       }
+   }
+   };
+```

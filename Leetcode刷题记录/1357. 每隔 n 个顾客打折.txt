@@ -1,0 +1,36 @@
+### [1357. 每隔 n 个顾客打折](https://leetcode-cn.com/problems/apply-discount-every-n-orders/)
+
+```c++
+class Cashier {
+private:
+    int cusID=0;
+    unordered_map<int,int> price;
+    int n_,d_;
+public:
+    Cashier(int n, int discount, vector<int>& products, vector<int>& prices) {
+        n_=n;
+        d_=discount;
+        for(int i=0;i<products.size();++i)
+            price[products[i]]=prices[i];
+    }
+    
+
+    double getBill(vector<int> product, vector<int> amount) {
+        cusID++;
+        double bill=0;
+        for(int i=0;i<product.size();++i)
+            bill+=price[product[i]]*amount[i];
+        if(cusID%n_==0)
+            bill-=d_*bill/100;
+        return bill;
+    }
+
+};
+
+/**
+
+ * Your Cashier object will be instantiated and called as such:
+ * Cashier* obj = new Cashier(n, discount, products, prices);
+ * double param_1 = obj->getBill(product,amount);
+   */
+```

@@ -1,0 +1,57 @@
+### [301. 删除无效的括号](https://leetcode-cn.com/problems/remove-invalid-parentheses/)
+
+DFS
+
+```c++
+class Solution {
+public:
+    vector<string> res;
+    vector<string> removeInvalidParentheses(string s) {
+        int left=0,right=0;
+        for(int i=0;i<s.size();++i){
+            if(s[i]=='(')
+                left++;
+            else if(s[i]==')'){
+                if(left==0)
+                    right++;
+                else
+                    left--;
+            }
+        }
+        dfs(s,0,left,right);
+        return res;
+    }
+
+    void dfs(string s,int start,int left,int right){
+        if(left==right&&left==0){
+            if(checkValid(s))
+                res.push_back(s);
+            return;
+        }
+        for(int i=start;i<s.size();++i){
+            if(i>=start+1&&s[i-1]==s[i])
+                continue;
+            if(left>0&&s[i]=='(')
+                dfs(s.substr(0,i)+s.substr(i+1,s.size()-i-1),i,left-1,right);
+            if(right>0&&s[i]==')')
+                dfs(s.substr(0,i)+s.substr(i+1,s.size()-i-1),i,left,right-1);
+        }
+    }
+    
+    bool checkValid(string s){
+        int left=0;
+        for(int i=0;i<s.size();++i){
+            if(s[i]=='(')
+                left++;
+            else if(s[i]==')'){
+                left--;
+                if(left<0)
+                    return false;
+            }
+        }
+        return left==0;
+    }
+
+};
+```
+

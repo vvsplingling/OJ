@@ -1,0 +1,35 @@
+### [面试题 16.06. 最小差](https://leetcode-cn.com/problems/smallest-difference-lcci/)
+
+```c++
+class Solution {
+public:
+    int smallestDifference(vector<int>& a, vector<int>& b) {
+        long best=INT64_MAX;
+        sort(a.begin(),a.end());
+        sort(b.begin(),b.end());
+        int i=0,j=0;
+        while((i<a.size())&&(j<b.size())){
+            if(best==0)
+                return 0;
+            if(a[i]<b[j])
+            {
+                while((i<a.size())&&(a[i]<b[j]))
+                    i++;
+                if(i<a.size())
+                    best=min(best,abs((long)(a[i]-b[j])));
+                best=min(best,abs((long)(a[i-1]-b[j])));
+            }
+            else if(a[i]>=b[j])
+            {
+                while((j<b.size())&&(a[i]>b[j]))
+                    j++;
+                if(j<b.size())
+                    best=min(best,abs((long)(a[i]-b[j])));
+                best=min(best,abs((long)(a[i]-b[j-1])));
+            }
+        }
+        return (int)best;
+    }
+};
+```
+
